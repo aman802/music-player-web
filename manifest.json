@@ -1,6 +1,6 @@
 {
   "name": "Music Player Web",
-  "short_name": "MPW",
+  "short_name": "Music Player",
   "start_url": "index.html",
   "display": "standalone",
   "background_color": "#1E88E5",
