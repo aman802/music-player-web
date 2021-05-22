@@ -1,9 +1,14 @@
-let staticCacheName = "pwa";
+const staticCacheName = "pwa";
+const cachedFileURLs = [
+  './index.html',
+  './style.css',
+  './script.js',
+];
 
 self.addEventListener("install", e => {
   e.waitUntil(
     caches.open(staticCacheName).then(cache => {
-      return cache.addAll(["/"]);
+      return cache.addAll(cachedFileURLs);
     })
   );
 });

@@ -3,8 +3,8 @@
   "short_name": "MPW",
   "start_url": "index.html",
   "display": "standalone",
-  "background_color": "#5900b3",
-  "theme_color": "black",
+  "background_color": "#1E88E5",
+  "theme_color": "#1E88E5",
   "scope": ".",
   "description": "Simple Music Player",
   "icons": [
