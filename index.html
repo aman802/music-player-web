@@ -8,6 +8,9 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
   <link rel="stylesheet" href="style.css">
   <link rel="shortcut icon" type="image/x-icon" href="images/music.svg" />
+  <meta name="apple-mobile-web-app-status-bar" content="#aa7700">
+  <meta name="theme-color" content="black">
+  <link rel="manifest" href="./manifest.json">
   <title>Music Player</title>
 </head>
 
@@ -55,6 +58,22 @@
   </div>
 
 
+  <script>
+    window.addEventListener("load", () => {
+      registerSW();
+    });
+
+    async function registerSW() {
+      if ('serviceWorker' in navigator) {
+        try {
+          await navigator.serviceWorker.register('sw.js');
+        }
+        catch (e) {
+          console.log('SW registration failed');
+        }
+      }
+    };
+  </script>
   <script src="script.js"></script>
 </body>
 
