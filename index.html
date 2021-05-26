@@ -63,22 +63,48 @@
 
   </div>
 
+  <div class="modal" id="update-modal">
+    <div class="modal-content">
+      <span class="modal-text">A new version is available, please reload</span>
+      <span id="reload">Reload</span>
+    </div>
+  </div>
+
 
   <script>
+    let newWorker;
+    let refreshing;
+
+    document.getElementById('reload').addEventListener('click', () => {
+      newWorker.postMessage({ action: 'skipWaiting' });
+    })
+
     window.addEventListener("load", () => {
-      registerSW();
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('sw.js')
+          .then(reg => {
+            reg.addEventListener('updatefound', () => {
+              newWorker = reg.installing;
+              newWorker.addEventListener('statechange', () => {
+                switch (newWorker.state) {
+                  case 'installed':
+                    if (navigator.serviceWorker.controller) {
+                      document.getElementById('update-modal').classList.add('show');
+                    }
+                    break;
+                }
+              })
+            })
+          })
+      }
     });
 
-    async function registerSW() {
-      if ('serviceWorker' in navigator) {
-        try {
-          await navigator.serviceWorker.register('sw.js');
-        }
-        catch (e) {
-          console.log('SW registration failed');
-        }
-      }
-    };
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+      if (refreshing) return;
+      window.location.reload();
+      refreshing = true;
+    });
+
   </script>
   <script src="script.js"></script>
 </body>

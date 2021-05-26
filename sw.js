@@ -1,3 +1,4 @@
+const version = '0.1.0';
 const staticCacheName = "pwa";
 const cachedFileURLs = [
   './index.html',
@@ -22,3 +23,9 @@ self.addEventListener("fetch", e => {
     })
   );
 });
+
+self.addEventListener('message', event => {
+  if (event.data.action === 'skipWaiting') {
+    self.skipWaiting();
+  }
+})
