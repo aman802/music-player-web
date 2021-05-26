@@ -157,21 +157,22 @@ body {
   }
 
   .space .img-container {
-    width: 200px;
-    position: unset;
+    width: 180px;
   }
 
   .space .img-container img {
-    height: 200px;
+    height: 180px;
     position: unset;
     border-radius: 50%;
 
+    transition: margin 0.1s linear;
     animation: rotate 3s linear infinite;
     animation-play-state: paused;
   }
 
   .space.play .img-container img {
     animation-play-state: running;
+    margin-bottom: 60px;
   }
 
   .music-container {
@@ -199,5 +200,14 @@ body {
     background-color: #E0E0E0;
     height: 8px;
     border-radius: 10px;
+  }
+
+  .navigation {
+    flex: 1;
+    justify-content: space-between;
+  }
+
+  .action-btn {
+    margin: 0;
   }
 }

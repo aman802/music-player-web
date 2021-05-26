@@ -3,6 +3,8 @@ const musicContainer = document.querySelector('.music-container')
 const playBtn = document.querySelector('#play')
 const backwardsBtn = document.querySelector('#backward')
 const forwardsBtn = document.querySelector('#forward')
+const prevBtn = document.querySelector('#previous')
+const nextBtn = document.querySelector('#next')
 const addBtn = document.querySelector("#add")
 const fileInput = document.querySelector("#file-input")
 const audio = document.querySelector('#audio')
@@ -12,6 +14,9 @@ const progress = document.querySelector('.progress')
 const progressContainer = document.querySelector('.progress-container')
 const title = document.querySelector('#title')
 const cover = document.querySelector('#cover')
+
+let songs = [];
+let currentSongPosition;
 
 // Helper functions
 function extractFileName(name) {
@@ -98,6 +103,30 @@ function seekForwards() {
   startTime.innerText = convertToHoursAndMinutes(updatedCurrentTime)
 }
 
+function prevSong() {
+  if (songs.length !== 0) {
+    if (currentSongPosition === 0) {
+      currentSongPosition = songs.length - 1;
+    } else {
+      currentSongPosition--;
+    }
+    loadSongFromComputer(songs[currentSongPosition]);
+    playSong();
+  }
+}
+
+function nextSong() {
+  if (songs.length !== 0) {
+    if (currentSongPosition === songs.length - 1) {
+      currentSongPosition = 0;
+    } else {
+      currentSongPosition++;
+    }
+    loadSongFromComputer(songs[currentSongPosition]);
+    playSong();
+  }
+}
+
 function updateProgress(e) {
   const { duration, currentTime } = e.srcElement
   const progressPercent = (currentTime / duration) * 100
@@ -118,8 +147,9 @@ function addNewSong() {
 }
 
 function readFile() {
-  const curFile = fileInput.files[0];
-  loadSongFromComputer(curFile)
+  songs = fileInput.files
+  currentSongPosition = 0;
+  loadSongFromComputer(songs[currentSongPosition]);
   playSong()
 }
 
@@ -136,6 +166,8 @@ playBtn.addEventListener('click', () => {
 // Change song events
 backwardsBtn.addEventListener('click', seekBackwards)
 forwardsBtn.addEventListener('click', seekForwards)
+prevBtn.addEventListener('click', prevSong)
+nextBtn.addEventListener('click', nextSong)
 
 audio.addEventListener('durationchange', updateEndTime)
 audio.addEventListener('timeupdate', updateProgress)
